@@ -116,6 +116,13 @@ CREATE TABLE ADMIN_OTP (
     EXPIRES_AT TIMESTAMP
 );
 
+-- Create user MFA table
+CREATE TABLE USER_MFA (	
+    USER_NAME VARCHAR2(100), 
+	LAST_VERIFIED DATE, 
+	PRIMARY KEY (USER_NAME)USING INDEX  ENABLE
+);
+
 -------------------------------------
 -- Insert sample data
 -------------------------------------
@@ -151,3 +158,6 @@ INSERT INTO LF_MATCHES (REPORT_ID, ITEM_ID, MATCH_STATUS, VERIFIED_BY, VERIFIED_
 (5, 5, 'VERIFIED', 'admin', SYSTIMESTAMP - INTERVAL '2' DAY);
 
 COMMIT;
+
+
+
