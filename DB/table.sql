@@ -70,6 +70,19 @@ FROM LF_MATCHES M
 JOIN LF_REPORTS R ON M.REPORT_ID = R.REPORT_ID
 JOIN LF_FOUND_ITEMS I ON M.ITEM_ID = I.ITEM_ID;
 
+--Message For send student when their item is matched
+CREATE OR REPLACE VIEW VIEW_MATCH_MESSAGES AS
+SELECT
+    M.MATCH_ID,
+    R.STUDENT_ID,
+    R.STUDENT_NAME,
+    R.PHONE_NUMBER,
+    R.ITEM_TYPE,
+    'Dear ' || R.STUDENT_NAME || ', we have found an item matching your lost report: ' || R.ITEM_TYPE || '. Please contact the Lost & Found office for more details.' AS MESSAGE
+FROM LF_MATCHES M
+JOIN LF_REPORTS R ON M.REPORT_ID = R.REPORT_ID
+WHERE M.MATCH_STATUS = 'VERIFIED';
+
 -- Create activity log table to track system events
 CREATE TABLE LF_ACTIVITY_LOG (
     LOG_ID NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
